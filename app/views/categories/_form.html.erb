@@ -1,0 +1,39 @@
+<%= form_with model: @category, local: true do |form| %>
+  <% if @category.errors.any? %>
+    <div class="alert alert-danger">
+      <h4>Errores:</h4>
+      <ul>
+        <% @category.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, "Nombre de la categoría", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true, placeholder: "Ej: Trabajo, Personal, Estudio..." %>
+  </div>
+  
+  <div class="mb-3">
+    <%= form.label :color, "Color", class: "form-label" %>
+    <%= form.select :color, 
+          options_for_select([
+            ['Azul', '#0d6efd'],
+            ['Gris', '#6c757d'],
+            ['Verde', '#198754'],
+            ['Rojo', '#dc3545'],
+            ['Amarillo', '#ffc107'],
+            ['Celeste', '#0dcaf0'],
+            ['Negro', '#212529']
+          ], @category.color), 
+          {}, 
+          class: "form-select" %>
+    <div class="form-text">Elige un color para identificar fácilmente esta categoría</div>
+  </div>
+  
+  <div class="d-grid gap-2">
+    <%= form.submit @category.persisted? ? "Actualizar Categoría" : "Crear Categoría", class: "btn btn-primary" %>
+    <%= link_to 'Cancelar', categories_path, class: 'btn btn-secondary' %>
+  </div>
+<% end %>

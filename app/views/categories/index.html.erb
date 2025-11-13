@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Mis Categorías</h1>
+  <%= link_to 'Nueva Categoría', new_category_path, class: 'btn btn-primary' %>
+</div>
+
+<div class="row">
+  <% if @categories.any? %>
+    <% @categories.each do |category| %>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 class="card-title">
+                <span class="badge" style="background-color: <%= category.color %>; color: white;">
+                  <%= category.name %>
+                </span>
+              </h5>
+              <div>
+                <%= link_to 'Editar', edit_category_path(category), class: 'btn btn-sm btn-outline-primary' %>
+                <%= link_to 'Eliminar', category_path(category), 
+                      method: :delete, 
+                      data: { confirm: '¿Estás seguro? Las tareas de esta categoría quedarán sin categoría.' },
+                      class: 'btn btn-sm btn-outline-danger' %>
+              </div>
+            </div>
+            <p class="card-text text-muted mt-2">
+              <%= category.tasks.count %> tareas en esta categoría
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="col-12">
+      <div class="text-center py-5">
+        <i class="bi bi-tags text-muted" style="font-size: 3rem;"></i>
+        <h3 class="text-muted mt-3">No hay categorías</h3>
+        <p class="text-muted">Crea tu primera categoría para organizar mejor tus tareas</p>
+        <%= link_to 'Crear Categoría', new_category_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>
